@@ -7,14 +7,14 @@ function res = fade(im1, im2, saveName, time)
     numFrames = time * 25;
     for k = 1:numFrames
 
-        im_curr = im1(:, :, :) * k/numFrames + im2(:, :, :) * (1-k)/numFrames;
-
+        im_curr = round(im1(:, :, :) .* (1-k/numFrames) + im2(:, :, :) .* ((k)/numFrames));
         imagesc(im_curr);
-        M(k) = getframe;
+        M(k) = getframe(gcf);
     end
     v = VideoWriter(saveName,'MPEG-4'); %Name your video
     v.FrameRate = 25; %Set the frame rate to 25 frames per second
-    open(v)
+close all
+open(v)
     writeVideo(v,M);
     close(v);
 
