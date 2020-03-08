@@ -29,5 +29,6 @@ for filename in os.listdir(directory):
 			for (x, y) in coords:
 				cv2.circle(img, (x, y), 1, (0, 0, 255), -1)
 			np.savetxt(output_dir + '/' + prefix + '.csv', coords, delimiter=',')
+			cv2.imwrite(output_dir + '/' + prefix + '_out.jpg', img_resize)
 		except IndexError:
 			cv2.imwrite(output_dir + '/' + prefix + '_out.jpg', img_resize)

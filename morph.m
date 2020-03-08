@@ -1,3 +1,5 @@
+pairs = 
+
 morph_images('images_square/warren_out.jpg', 'images_square/biden_out.jpg', 'warren.csv', 'biden.csv', 'morph')
 
 function video = morph_images(img1_name, img2_name, img1_points, img2_points, out_name)
