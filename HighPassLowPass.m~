@@ -1,0 +1,37 @@
+% Eajer Toh 
+% EE168 High Pass/Low Pass Turn to Dust
+
+% Read in two images 
+image_1 = im2double(imread('Castro.jpg'));
+
+% Fourier transform of images and shift 
+image_1_fft = fftshift(fft2(double(image_1)));
+
+% Size of images
+[rows, columns, numberOfColorChannels] = size(image_1);
+
+% Create meshgrid
+[x, y] = meshgrid(-108:107, -10:255);
+
+% Create filters
+magnitude = sqrt((x/256).^2 + (y/256).^2);
+
+numFrames = 125;
+cutoff = 256-(256/125):-256/125:0
+image_1_filtered = zeros(size(image_1_fft));
+for i = 1:numFrames
+    filter_lowpass = double(magnitude <= cutoff(i));
+    %filter_highpass = double(magnitude >= cutoff);
+        
+    for z = 1:numberOfColorChannels
+        image_1_filtered(:,:,z) = image_1_fft(:,:,z) .* filter_lowpass;
+    end   
+    final_image_1 = abs(ifft2(ifftshift(image_1_filtered)));
+    imshow(final_image_1)
+    M(k) = getframe;
+end
+v = VideoWriter('TestLowPass','MPEG-4'); %Name your video
+v.FrameRate = 25; %Set the frame rate to 25 frames per second
+open(v)
+writeVideo(v,M);
+close(v);
