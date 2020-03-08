@@ -1,6 +1,14 @@
-pairs = 
+pairs = ['3', '4', '5', '6', '7', '8', '10', '11', '12', '13', '16', '17', '19', '20'];
 
-morph_images('images_square/warren_out.jpg', 'images_square/biden_out.jpg', 'warren.csv', 'biden.csv', 'morph')
+for i=1:2:length(pairs)
+    name1 = strcat(pairs(i), '_out.jpg');
+    name2 = strcat(pairs(i+1), '_out.jpg');
+    csv1 = strcat(pairs(i), '.csv');
+    csv2 = strcat(pairs(i+1), '.csv');
+    out_name = strcat('morph_', int2str(uint8(i / 2)));
+
+    morph_images(strcat('images_processed/', name1), strcat('images_processed/', name2), strcat('images_processed/', csv1), strcat('images_processed/', csv2), strcat('out/', out_name))
+end
 
 function video = morph_images(img1_name, img2_name, img1_points, img2_points, out_name)
     img1=imread(img1_name);
@@ -29,7 +37,7 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
 
     figure;
     colormap('gray')
-    FRAMES=20;
+    FRAMES=144;
     for k=1:FRAMES,
     frac=(k-1)/(FRAMES - 1);
     % get the new locations of the pixels, moving the first image towards the second, and
@@ -53,7 +61,7 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     M(k) = getframe;
     end;
     v = VideoWriter(out_name,'MPEG-4'); %Name your video
-    v.FrameRate = 10;
+    v.FrameRate = 24;
     open(v)
     writeVideo(v,M);
     close(v);

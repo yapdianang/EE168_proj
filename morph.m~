@@ -1,4 +1,12 @@
-morph_images('images_square/warren_out.jpg', 'images_square/biden_out.jpg', 'warren.csv', 'biden.csv', 'morph')
+pairs = ['3', '4', '5', '6', '7', '8', '10', '11', '12', '13', '16', '17', '19', '20'];
+
+for i=1:2:length(pairs)
+    name1 = strcat(pairs(i), '_out.jpg');
+    name2 = strcat(pairs(i+1), '_out.jpg');
+    csv1 = strcat(pairs(i), '.csv');
+    csv2 = strcat(pairs
+
+morph_images('images_square/warren', 'images_square/biden', 'warren.csv', 'biden.csv', 'morph')
 
 function video = morph_images(img1_name, img2_name, img1_points, img2_points, out_name)
     img1=imread(img1_name);
@@ -22,8 +30,8 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     x=linspace(1,512,512);
     y=linspace(1,512,512);
     [xi,yi]=meshgrid(x,y);
-    shiftx=griddata(X1,Y1,X_diffs,xi,yi);
-    shifty=griddata(X1,Y1,Y_diffs,xi,yi);
+    shiftx=-griddata(X1,Y1,X_diffs,xi,yi);
+    shifty=-griddata(X1,Y1,Y_diffs,xi,yi);
 
     figure;
     colormap('gray')
@@ -34,19 +42,17 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     % the second towards the first
     locx = round(xi+shiftx*frac);
     locy = round(yi+shifty*frac);
-    locxx = round(xi+shiftx*(1-frac));
-    locyy = round(yi+shifty*(1-frac));
+    locxx = round(xi-shiftx*(1-frac));
+    locyy = round(yi-shifty*(1-frac));
     % make sure all pixels stay within the array (use the clip.m code in the class directory)
     locx=clip(locx,1,512);
     locy=clip(locy,1,512);
     locxx=clip(locxx,1,512);
     locyy=clip(locyy,1,512);
     % now map the pixels to their new positions and blend
-    %final= img1((locx(:)-1)*256+locy(:))*(1-frac) + img2((locxx(:)-1)*256+locyy(:))*frac;
-    %final=reshape(final,512,512,3);
     for i=1:512,
         for j=1:512,
-         final(j,i,:)=img1(locy(j,i),locx(j,i),:)*(1-frac) + img1(locyy(j,i),locxx(j,i),:)*frac;
+         final(j,i,:)=img1(locy(j,i),locx(j,i),:)*(1-frac) + img2(locyy(j,i),locxx(j,i),:)*frac;
         end;
     end;
     image(final);
