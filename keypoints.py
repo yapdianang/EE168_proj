@@ -12,7 +12,6 @@ predictor = dlib.shape_predictor('model.dat')
 img = cv2.imread(img_path)
 img_resize = cv2.resize(img, (512, 512))
 gray = cv2.cvtColor(img_resize, cv2.COLOR_BGR2GRAY)
-'''
 bbox = detector(gray, 1)[0]
 points = predictor(gray, bbox)
 
@@ -22,6 +21,6 @@ for i in range(0, 68):
 
 for (x, y) in coords:
 	cv2.circle(img, (x, y), 1, (0, 0, 255), -1)
-'''
+
 cv2.imwrite(output_name + '_out.jpg', img_resize)
 np.savetxt(output_name + '.csv', coords, delimiter=',')
