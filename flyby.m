@@ -24,6 +24,21 @@ end
 %imshow(data / 255)
 
 k = 1;
+for height=10000:-100:1500
+    data_rot = 255 - data;
+    relief = (conv2(data_rot, [1 -0.5; -0.5 0], 'same') + 1) ./ 2;
+    relief(relief < -50) = -50;
+    relief(relief > 50) = 50;
+    relief = relief - min(min(relief));
+    relief = relief / max(max(relief)) * 255;
+    relief = relief .* (255 - data_rot + 128)/255;
+
+    perspective = perspective_projection(data_rot, relief/255, 2000, height);
+    imshow(perspective')
+    M(k) = getframe;
+    k = k + 1;
+end
+
 for angle=0:2:180
     data_rot = imrotate(data, angle, 'crop');
     data_rot = 255 - data_rot;
