@@ -1,8 +1,8 @@
 pairs = ['3', '4', '5', '6', '7', '8', '10', '11', '12', '13', '16', '17', '19', '20'];
 
 for i=1:2:length(pairs)
-    name1 = strcat(pairs(i), '_out.jpg');
-    name2 = strcat(pairs(i+1), '_out.jpg');
+    name1 = strcat(int2str(pairs(i)), '_out.jpg');
+    name2 = strcat(int2str(pairs(i+1)), '_out.jpg');
     csv1 = strcat(pairs(i), '.csv');
     csv2 = strcat(pairs(i+1), '.csv');
     out_name = strcat('morph_', int2str(uint8(i / 2)));
