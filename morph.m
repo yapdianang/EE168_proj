@@ -64,7 +64,7 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     %test = getframe(gca);
     M(k) = im2frame(final);
     end;
-    v = VideoWriter(out_name,'MPEG-4'); %Name your video
+    v = VideoWriter(out_name,'Motion JPEG AVI'); %Name your video
     v.FrameRate = 24;
     open(v)
     writeVideo(v,M);

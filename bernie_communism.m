@@ -1,4 +1,7 @@
-function res = bernie_communism(im1, saveName, time)
+
+communism(imread('images/bernie_financial.jpg'), 'bernie_communism', 5);
+
+function res = communism(im1, saveName, time)
     % assumes that im1 and im2 are of the same size, time in seconds
     % saveName: name of saved mp4 file
     % time: time in seconds for fade
@@ -15,14 +18,14 @@ function res = bernie_communism(im1, saveName, time)
     end
     for k = 1:numFrames/2
         im_curr_new = im1.* (k/(numFrames/2)) + im_curr .* (1 - k/(numFrames/2));
-        imagesc(im_curr_new);
+        image(im_curr_new);
         M(k) = getframe(gcf);
     end
 
-    v = VideoWriter(saveName,'MPEG-4'); %Name your video
+    v = VideoWriter(saveName,'Motion JPEG AVI'); %Name your video
     v.FrameRate = 25; %Set the frame rate to 25 frames per second
-close all
-open(v)
+    close all
+    open(v)
     writeVideo(v,M);
     close(v);
 
