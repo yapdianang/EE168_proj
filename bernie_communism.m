@@ -10,7 +10,6 @@ function res = bernie_communism(im1, saveName, time)
     for k = 1:numFrames/2
         im_curr = im_curr - factor;
         im_curr(:, :, 1) = rescale_255(im_curr);
-        im_curr = color_eyes(im_curr, k)
         imagesc(im_curr);
         M(k) = getframe(gcf);
     end

@@ -1,0 +1,43 @@
+% first_order_mask = [0.25 0.5 0.25; 0.5 1 0.5; 0.25 0.5 0.25];
+% [rows, cols] = size(p1_data);
+% interspersed = zeros(rows*2, cols*2);
+% for i = 1:2*rows
+%     for j = 1:2*cols
+%         if (rem(i, 2) == 0 && rem(j, 2) == 0)
+%             interspersed(i, j) = p1_data(i/2, j/2);
+%         end
+%     end
+% end 
+% conv_zoom1 = rescale_255(conv2(interspersed, first_order_mask));
+% figure;
+% colormap([v v v]);
+% image(conv_zoom1);
+% axis('image');
+% title('Convolved first-order hold, zoomed');
+
+im = imread('images_processed/9_out.jpg');
+[rows, cols, a] = size(im);
+interspersed = zeros(rows*2, cols*2, 3);
+for i = 1:2*rows
+    for j = 1:2*cols
+        if (rem(i, 2) == 0 && rem(j, 2) == 0)
+            interspersed(i, j, :) = im(i/2, j/2, :);
+        end
+    end
+end 
+
+first_order_mask = [0.25 0.5 0.25; 0.5 1 0.5; 0.25 0.5 0.25];
+
+conv_zoom1(:, :, 1) = (conv2(interspersed(:, :, 1), first_order_mask));
+conv_zoom1(:, :, 2) = (conv2(interspersed(:, :, 2), first_order_mask));
+conv_zoom1(:, :, 3) = (conv2(interspersed(:, :, 3), first_order_mask));
+%im = im(260:320, 32:94, :);
+conv_zoom1 = rescale_255(conv_zoom1);
+imagesc(conv_zoom1);
+
+function scaled = rescale_255(im)
+    im_max = max(max(im));
+    im_min = min(min(im));
+
+    scaled =  floor(255 .* ((im - im_min)./(im_max - im_min)));
+end

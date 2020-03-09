@@ -1,6 +1,8 @@
 pairs = ["3"; "4"; "5"; "6"; "7"; "8"; "10"; "11"; "12"; "13"; "16"; "17"; "19"; "20"];
 
 for i=1:2:length(pairs)
+    pairs(i)
+    pairs(i+1)
     name1 = strcat(char(pairs(i)), '_out.jpg');
     name2 = strcat(char(pairs(i+1)), '_out.jpg');
     csv1 = strcat(char(pairs(i)), '.csv');
