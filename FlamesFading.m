@@ -29,7 +29,7 @@ for i = 1:numFrames
         final_image = (rourke_frac.*rourke) + (flames_frac.*flames_2);
     end
     imshow(final_image)
-    M(i) = getframe;
+    M(k) = im2frame(final_image);
 end
 
 v = VideoWriter('RourkeFlames','MPEG-4'); %Name your video

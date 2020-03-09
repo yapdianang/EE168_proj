@@ -37,10 +37,8 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     shiftx=-griddata(X1,Y1,X_diffs,xi,yi);
     shifty=-griddata(X1,Y1,Y_diffs,xi,yi);
 
-    figure;
-    colormap('gray')
     FRAMES=144;
-    for k=1:FRAMES,
+    for k=1:FRAMES
     frac=(k-1)/(FRAMES - 1);
     % get the new locations of the pixels, moving the first image towards the second, and
     % the second towards the first
@@ -55,12 +53,9 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     locyy=clip(locyy,1,512);
     % now map the pixels to their new positions and blend
     %final = zeros(512,512, 3);
-    for i=1:512,
-        for j=1:512,
-         final(j,i,:)=img1(locy(j,i),locx(j,i),:)*(1-frac) + img2(locyy(j,i),locxx(j,i),:)*frac;
-        end;
-    end;
-    image(final);
+    j = 1:512:512;
+    i = 1:512:512;
+    final(j,i,:)=img1(locy(j,i),locx(j,i),:)*(1-frac) + img2(locyy(j,i),locxx(j,i),:)*frac;
     %test = getframe(gca);
     M(k) = im2frame(final);
     end;
