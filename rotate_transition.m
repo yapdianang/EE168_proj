@@ -1,3 +1,5 @@
+perspective(imread('images/bernie_ring.jpg'), imread('images/hobbit_ring.png'), "Final_Vid_Clips/bernie_ring", 5);
+
 function res = perspective(im1, im2, saveName, time)
     % assumes that im1 and im2 are of the same size, time in seconds
     % saveName: name of saved mp4 file
@@ -18,10 +20,9 @@ function res = perspective(im1, im2, saveName, time)
         catch
         im_curr(256 - crop_row_w: 256 + crop_row_w-1, 256 - crop_row_w:256 + crop_row_w-1, :) = im_rot_resize;
         end
-        imagesc(im_curr);
-        M(k) = getframe(gcf);
+        M(k) = im2frame(im_curr);
     end
-    v = VideoWriter(saveName,'MPEG-4'); %Name your video
+    v = VideoWriter(saveName,'Motion JPEG AVI'); %Name your video
     v.FrameRate = 25; %Set the frame rate to 25 frames per second
 close all
 open(v)

@@ -52,12 +52,14 @@ function video = morph_images(img1_name, img2_name, img1_points, img2_points, ou
     locxx=clip(locxx,1,512);
     locyy=clip(locyy,1,512);
     % now map the pixels to their new positions and blend
-    %final = zeros(512,512, 3);
-    j = 1:512:512;
-    i = 1:512:512;
-    final(j,i,:)=img1(locy(j,i),locx(j,i),:)*(1-frac) + img2(locyy(j,i),locxx(j,i),:)*frac;
+    final = zeros(512,512, 3);
+    for i=1:512,
+        for j=1:512,
+         final(j,i,:)=img1(locy(j,i),locx(j,i),:)*(1-frac) + img2(locyy(j,i),locxx(j,i),:)*frac;
+        end;
+    end;
     %test = getframe(gca);
-    M(k) = im2frame(final);
+    M(k) = im2frame(rescale(final));
     end;
     v = VideoWriter(out_name,'Motion JPEG AVI'); %Name your video
     v.FrameRate = 24;
