@@ -15,7 +15,7 @@ function res = communism(im1, saveName, time)
         im_curr(:, :, 1) = rescale_255(im_curr);
         M(k) = im2frame(im_curr);
     end
-    for k = round(numFrames/2):numFrames
+    for k = 1:numFrames/2
         im_curr_new = im1.* (k/(numFrames/2)) + im_curr .* (1 - k/(numFrames/2));
         M(k) = im2frame(im_curr_new);
     end
