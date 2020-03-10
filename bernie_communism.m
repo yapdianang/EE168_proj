@@ -10,16 +10,14 @@ function res = communism(im1, saveName, time)
     factor = im1(:, :, 3)/round(numFrames/2);
     factor = factor + im1(:, :, 2)/round(numFrames/2);
     im_curr = im1;
-    for k = 1:numFrames/2
+    for k = round(1:numFrames/2)
         im_curr = im_curr - factor;
         im_curr(:, :, 1) = rescale_255(im_curr);
-        imshow(im_curr);
-        M(k) = getframe;
+        M(k) = im2frame(im_curr);
     end
-    for k = 1:numFrames/2
+    for k = round(numFrames/2):numFrames
         im_curr_new = im1.* (k/(numFrames/2)) + im_curr .* (1 - k/(numFrames/2));
-        imshow(im_curr_new);
-        M(k) = getframe;
+        M(k) = im2frame(im_curr_new);
     end
 
     v = VideoWriter(saveName,'Motion JPEG AVI'); %Name your video
