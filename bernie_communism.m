@@ -6,7 +6,7 @@ function res = communism(im1, saveName, time)
     % saveName: name of saved mp4 file
     % time: time in seconds for fade
     im1 = imresize(im1, [512 512]);
-    numFrames = time * 25;
+    numFrames = time * 25 * 2;
     factor = im1(:, :, 3)/round(numFrames/2);
     factor = factor + im1(:, :, 2)/round(numFrames/2);
     im_curr = im1;
