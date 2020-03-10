@@ -1,5 +1,5 @@
 
-communism(imread('images/bernie_financial.jpg'), 'Final_Vid_Clips/bernie_communism', 5);
+communism(imread('images/bernie_financial.jpg'), 'Final_Vid_Clips/bernie_communism', 4);
 
 function res = communism(im1, saveName, time)
     % assumes that im1 and im2 are of the same size, time in seconds
@@ -10,7 +10,7 @@ function res = communism(im1, saveName, time)
     factor = im1(:, :, 3)/round(numFrames/2);
     factor = factor + im1(:, :, 2)/round(numFrames/2);
     im_curr = im1;
-    for k = round(1:numFrames/2)
+    for k = 1:numFrames/2
         im_curr = im_curr - factor;
         im_curr(:, :, 1) = rescale_255(im_curr);
         M(k) = im2frame(im_curr);
@@ -18,6 +18,7 @@ function res = communism(im1, saveName, time)
     for k = 1:numFrames/2
         im_curr_new = im1.* (k/(numFrames/2)) + im_curr .* (1 - k/(numFrames/2));
         M(k) = im2frame(im_curr_new);
+
     end
 
     v = VideoWriter(saveName,'Motion JPEG AVI'); %Name your video
